@@ -1,44 +1,37 @@
 import React from "react";
+import "./App.css";
 import { openOrder, cancelAll, listBTCUSDT } from "./modules/api";
 
 const App = () => {
   return (
-    <div>
-      <h2>GVT CopyTrading</h2>
-      <div
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          width: "200px",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            width: "100px",
-            height: "200px",
-            justifyContent: "space-between",
-          }}
-        >
-          <button onClick={() => listBTCUSDT()}>BTCUSDT Open Orders</button>
+    <div className="app-container">
+      <h2 className="app-title">GVT CopyTrading</h2>
+      <div className="app-content">
+        <div className="app-button-container">
+          <button className="app-button" onClick={() => listBTCUSDT()}>
+            BTCUSDT Open Orders
+          </button>
 
           <button
+            className="app-button app-button-long"
             onClick={() => openOrder("Buy", "BTCUSDT")}
-            style={{ backgroundColor: "green" }}
           >
             Long BTCUSDT
           </button>
 
           <button
+            className="app-button app-button-short"
             onClick={() => openOrder("Sell", "BTCUSDT")}
-            style={{ backgroundColor: "red" }}
           >
             Short BTCUSDT
           </button>
 
-          <button onClick={() => cancelAll()}>Cancel All Orders</button>
+          <button
+            className="app-button app-button-cancel"
+            onClick={() => cancelAll()}
+          >
+            Cancel All Orders
+          </button>
         </div>
       </div>
     </div>
