@@ -1,5 +1,5 @@
 import React from "react";
-import { openOrder, cancelAll, listBTCUSDT } from "./modules/API";
+import { openOrder, cancelAll, listBTCUSDT } from "./modules/api";
 
 const App = () => {
   return (
@@ -25,14 +25,14 @@ const App = () => {
           <button onClick={() => listBTCUSDT()}>BTCUSDT Open Orders</button>
 
           <button
-            onClick={() => openOrder("Buy")}
+            onClick={() => openOrder("Buy", "BTCUSDT")}
             style={{ backgroundColor: "green" }}
           >
             Long BTCUSDT
           </button>
 
           <button
-            onClick={() => openOrder()}
+            onClick={() => openOrder("Sell", "BTCUSDT")}
             style={{ backgroundColor: "red" }}
           >
             Short BTCUSDT
