@@ -1,38 +1,19 @@
 import React from "react";
 import "./App.css";
-import { openOrder, cancelAll, listBTCUSDT } from "./modules/api";
+import TradeButtons from "./Components/TradeButtons";
 
 const App = () => {
   return (
     <div className="app-container">
       <h2 className="app-title">GVT CopyTrading</h2>
       <div className="app-content">
-        <div className="app-button-container">
-          <button className="app-button" onClick={() => listBTCUSDT()}>
-            BTCUSDT Open Orders
-          </button>
-
-          <button
-            className="app-button app-button-long"
-            onClick={() => openOrder("Buy", "BTCUSDT")}
-          >
-            Long BTCUSDT
-          </button>
-
-          <button
-            className="app-button app-button-short"
-            onClick={() => openOrder("Sell", "BTCUSDT")}
-          >
-            Short BTCUSDT
-          </button>
-
-          <button
-            className="app-button app-button-cancel"
-            onClick={() => cancelAll()}
-          >
-            Cancel All Orders
-          </button>
-        </div>
+        <TradeButtons symbol="BTCUSDT" />
+        <TradeButtons symbol="SOLUSDT" />
+        <TradeButtons symbol="ADAUSDT" />
+        <TradeButtons symbol="NEARUSDT" />
+        <TradeButtons symbol="ETHUSDT" />
+        <TradeButtons symbol="ATOMUSDT" />
+        <TradeButtons symbol="DOGEUSDT" />
       </div>
     </div>
   );

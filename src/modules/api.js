@@ -2,16 +2,6 @@ const crypto = require("crypto");
 
 const { http_request } = require("./config");
 
-export const listBTCUSDT = async () => {
-  const orderLinkId = crypto.randomBytes(16).toString("hex");
-
-  const endpoint = "/contract/v3/private/copytrading/order/list";
-
-  const data = "symbol=BTCUSDT&orderStatus=New&orderLinkId=" + orderLinkId;
-
-  return await http_request(endpoint, "GET", data, "List Open Trades");
-};
-
 export const openOrder = async (side, symbol) => {
   const orderLinkId = crypto.randomBytes(16).toString("hex");
 
