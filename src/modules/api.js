@@ -15,33 +15,33 @@ export const openOrder = async (side, symbol) => {
     "qty":"0.001",
     "takeProfit":"0",
     "stopLoss":"0",
-    "tpTriggerBy":"LastPrice",
+    "tpTriggerBy":"LastPrice",  
     "slTriggerBy":"LastPrice"
   }`;
 
-  console.log(data);
-
   const orderSide = side === "Buy" ? "LONG" : "SHORT";
+  const info = `Opening ${orderSide} BTCUSDT`;
 
-  return await http_request(
-    endpoint,
-    "POST",
-    data,
-    `Opening ${orderSide} BTCUSDT`
-  );
+  const response = await http_request(endpoint, "POST", data, info);
+
+  console.log(response);
+
+  return [response, info];
 };
 
-export const cancelAll = async () => {
+export const getOrder = async (symbol, responseData) => {
   const orderLinkId = crypto.randomBytes(16).toString("hex");
 
-  const endpoint = "/contract/v3/private/copytrading/order/cancel";
+  const endpoint = "/contract/v3/private/copytrading/order/list";
 
-  const data = '{"orderId":"' + orderLinkId + '"}';
+  const orderId = responseData.result.orderId;
 
-  return await http_request(
-    endpoint,
-    "POST",
-    data,
-    "Cancelling ALL open orders"
-  );
+  const data = `{
+    "symbol": "${symbol}",
+    "orderId": "${orderId}",
+    "orderLinkId": "${orderLinkId}",
+    "copyTradeOrderType": "Market"
+  }`;
+
+  return await http_request(endpoint, "GET", data, "Getting Orders");
 };

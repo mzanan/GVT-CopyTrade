@@ -37,6 +37,15 @@ body {
   width: 100px;
 }
 
+.app-button:hover {
+  background-color: lightblue;
+}
+
+.app-button:active {
+  background-color: gray;
+  transform: translateY(4px);
+}
+
 .app-button-long {
   background-color: green;
   margin-bottom: 10px;

@@ -1,11 +1,13 @@
 const crypto = require("crypto");
 const axios = require("axios");
 
-const BASE_URL = "https://api-testnet.bybit.com";
-const API_KEY = process.env.REACT_APP_API_KEY;
-const API_SECRET = process.env.REACT_APP_PRIVATE_KEY;
-const RECVWINDOW = 100000;
-const TIMESTAMP = Date.now().toString();
+import {
+  BASE_URL,
+  API_KEY,
+  API_SECRET,
+  RECVWINDOW,
+  TIMESTAMP,
+} from "../constants/index";
 
 function getSignature(parameters) {
   return crypto
@@ -41,17 +43,12 @@ async function http_request(endpoint, method, data, info) {
 
   try {
     const response = await axios(config);
-    console.log(response.data);
+    return response.data;
   } catch (error) {
     console.log(error);
   }
 }
 
 module.exports = {
-  BASE_URL,
-  API_KEY,
-  RECVWINDOW,
-  TIMESTAMP,
-  getSignature,
   http_request,
 };
