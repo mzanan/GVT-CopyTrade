@@ -6,9 +6,9 @@ import "react-toastify/dist/ReactToastify.css";
 const TradeButtons = ({ symbol }) => {
   const handleOpenOrder = async (type, symbol) => {
     try {
-      const [response, info] = await openOrder(type, symbol);
+      const [openOrderResponse, info] = await openOrder(type, symbol);
       toast(info);
-      toast(response.retMsg);
+      toast(openOrderResponse.retMsg);
     } catch (error) {
       toast(error.message);
     }
@@ -42,14 +42,10 @@ const TradeButtons = ({ symbol }) => {
       <ToastContainer
         position="bottom-right"
         autoClose={3000}
-        hideProgressBar={false}
-        newestOnTop={false}
-        closeOnClick
-        rtl={false}
+        closeOnClick={false}
         pauseOnFocusLoss
         draggable
         pauseOnHover
-        theme="light"
       />
     </div>
   );

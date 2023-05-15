@@ -12,36 +12,63 @@ export const openOrder = async (side, symbol) => {
     "symbol": "${symbol}",
     "orderType":"Market",
     "orderLinkId": "${orderLinkId}",
-    "qty":"0.001",
-    "takeProfit":"0",
-    "stopLoss":"0",
-    "tpTriggerBy":"LastPrice",  
-    "slTriggerBy":"LastPrice"
+    "qty":"0.001"
   }`;
 
   const orderSide = side === "Buy" ? "LONG" : "SHORT";
   const info = `Opening ${orderSide} BTCUSDT`;
 
-  const response = await http_request(endpoint, "POST", data, info);
+  const openOrderResponse = await http_request(endpoint, "POST", data, info);
+  console.log(openOrderResponse);
 
-  console.log(response);
+  const getOrderResponse = await getOrder(openOrderResponse);
+  console.log(getOrderResponse);
 
-  return [response, info];
+  const SlTpResponse = await setStopProfit(getOrderResponse);
+  console.log(SlTpResponse);
+
+  return [openOrderResponse, info];
 };
 
-export const getOrder = async (symbol, responseData) => {
-  const orderLinkId = crypto.randomBytes(16).toString("hex");
-
+export const getOrder = async ({ result }) => {
   const endpoint = "/contract/v3/private/copytrading/order/list";
 
-  const orderId = responseData.result.orderId;
-
   const data = `{
-    "symbol": "${symbol}",
-    "orderId": "${orderId}",
-    "orderLinkId": "${orderLinkId}",
-    "copyTradeOrderType": "Market"
+    "symbol": "${result.symbol}",
+    "orderId": "${result.orderId}",
+    "orderLinkId": "${result.orderLinkId}",
+    "orderType": "Market"
   }`;
 
-  return await http_request(endpoint, "GET", data, "Getting Orders");
+  const response = await http_request(endpoint, "GET", data, "Getting Orders");
+
+  return response;
+};
+
+export const setStopProfit = async ({ result }) => {
+  const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
+
+  const entryPrice = result.price;
+  let takeProfit = 0;
+  let stopLoss = 0;
+
+  if (result.side === "Buy") {
+    stopLoss = entryPrice * 0.97;
+    takeProfit = entryPrice * 1.12;
+  } else {
+    stopLoss = entryPrice * 1.03;
+    takeProfit = entryPrice * 0.88;
+  }
+
+  const data = `{
+    "symbol": "${result.symbol}",
+    "parentOrderId": "${result.orderId}",
+    "parentOrderLinkId": "${result.orderLinkId}",
+    "takeProfit": "${takeProfit}",
+    "stopLoss": "${stopLoss}"
+    "tpTriggerBy":"LastPrice",  
+    "slTriggerBy":"LastPrice"
+  }`;
+
+  return await http_request(endpoint, "POST", data, "Setting SL & TP");
 };
