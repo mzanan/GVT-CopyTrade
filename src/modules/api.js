@@ -21,38 +21,42 @@ export const openOrder = async (side, symbol) => {
   const openOrderResponse = await http_request(endpoint, "POST", data, info);
   console.log(openOrderResponse);
 
-  const getOrderResponse = await getOrder(openOrderResponse);
-  console.log(getOrderResponse);
+  const listOrderResponse = await getOrder(symbol);
+  console.log(listOrderResponse);
 
-  const SlTpResponse = await setStopProfit(getOrderResponse);
+  const SlTpResponse = await setStopProfit(
+    listOrderResponse,
+    openOrderResponse
+  );
   console.log(SlTpResponse);
 
   return [openOrderResponse, info];
 };
 
-export const getOrder = async ({ result }) => {
-  const endpoint = "/contract/v3/private/copytrading/order/list";
+export const getOrder = async (symbol) => {
+  const endpoint = "/contract/v3/private/copytrading/position/list";
 
-  const data = `{
-    "symbol": "${result.symbol}",
-    "orderId": "${result.orderId}",
-    "orderLinkId": "${result.orderLinkId}",
-    "orderType": "Market"
-  }`;
+  const data = `symbol=${symbol}`;
 
   const response = await http_request(endpoint, "GET", data, "Getting Orders");
 
   return response;
 };
 
-export const setStopProfit = async ({ result }) => {
+export const setStopProfit = async (
+  { result: listOrderResult },
+  { result: openOrderResult }
+) => {
+  const positionList = listOrderResult.list[0];
+  console.log("result ", positionList);
+
   const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
 
-  const entryPrice = result.price;
+  const entryPrice = positionList.entryPrice;
   let takeProfit = 0;
   let stopLoss = 0;
 
-  if (result.side === "Buy") {
+  if (positionList.side === "Buy") {
     stopLoss = entryPrice * 0.97;
     takeProfit = entryPrice * 1.12;
   } else {
@@ -61,14 +65,16 @@ export const setStopProfit = async ({ result }) => {
   }
 
   const data = `{
-    "symbol": "${result.symbol}",
-    "parentOrderId": "${result.orderId}",
-    "parentOrderLinkId": "${result.orderLinkId}",
-    "takeProfit": "${takeProfit}",
-    "stopLoss": "${stopLoss}"
+    "symbol": "${positionList.symbol}",
+    "parentOrderId": "${openOrderResult.orderId}",
+    "takeProfit": "${takeProfit.toFixed(1)}",
+    "stopLoss": "${stopLoss.toFixed(1)}"
     "tpTriggerBy":"LastPrice",  
-    "slTriggerBy":"LastPrice"
+    "slTriggerBy":"LastPrice",
+    "parentOrderLinkId": "${openOrderResult.orderLinkId}"
   }`;
+
+  console.log("data ", data);
 
   return await http_request(endpoint, "POST", data, "Setting SL & TP");
 };
