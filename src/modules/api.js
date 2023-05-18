@@ -24,7 +24,7 @@ export const openOrder = async (side, symbol) => {
   const listOrders = await getOrder(symbol);
   console.log(listOrders);
 
-  const SlTpResponse = await setStopProfit(listOrders, createOrder);
+  const SlTpResponse = await setStopProfit(createOrder, listOrders);
   console.log(SlTpResponse);
 
   return [createOrder, info];
@@ -41,16 +41,14 @@ export const getOrder = async (symbol) => {
 };
 
 export const setStopProfit = async (
-  { result: listOrder },
-  { result: createOrder }
+  { result: createOrder },
+  { result: listOrder }
 ) => {
-  const positionData = listOrder.list[0];
-
-  console.log("result ", positionData);
-
   const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
 
+  const positionData = listOrder.list[0];
   const entryPrice = positionData.entryPrice;
+
   let takeProfit = 0;
   let stopLoss = 0;
 
@@ -65,14 +63,12 @@ export const setStopProfit = async (
   const data = `{
     "symbol": "${positionData.symbol}",
     "parentOrderId": "${createOrder.orderId}",
-    "takeProfit": "${takeProfit.toFixed(1)}",
-    "stopLoss": "${stopLoss.toFixed(1)}"
+    "takeProfit": "${takeProfit.toFixed(2)}",
+    "stopLoss": "${stopLoss.toFixed(2)}",
     "tpTriggerBy":"LastPrice",  
     "slTriggerBy":"LastPrice",
     "parentOrderLinkId": "${createOrder.orderLinkId}"
   }`;
-
-  console.log("data ", data);
 
   return await http_request(endpoint, "POST", data, "Setting SL & TP");
 };
