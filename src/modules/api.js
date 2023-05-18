@@ -18,19 +18,16 @@ export const openOrder = async (side, symbol) => {
   const orderSide = side === "Buy" ? "LONG" : "SHORT";
   const info = `Opening ${orderSide} BTCUSDT`;
 
-  const openOrderResponse = await http_request(endpoint, "POST", data, info);
-  console.log(openOrderResponse);
+  const createOrder = await http_request(endpoint, "POST", data, info);
+  console.log(createOrder);
 
-  const listOrderResponse = await getOrder(symbol);
-  console.log(listOrderResponse);
+  const listOrders = await getOrder(symbol);
+  console.log(listOrders);
 
-  const SlTpResponse = await setStopProfit(
-    listOrderResponse,
-    openOrderResponse
-  );
+  const SlTpResponse = await setStopProfit(listOrders, createOrder);
   console.log(SlTpResponse);
 
-  return [openOrderResponse, info];
+  return [createOrder, info];
 };
 
 export const getOrder = async (symbol) => {
@@ -44,19 +41,20 @@ export const getOrder = async (symbol) => {
 };
 
 export const setStopProfit = async (
-  { result: listOrderResult },
-  { result: openOrderResult }
+  { result: listOrder },
+  { result: createOrder }
 ) => {
-  const positionList = listOrderResult.list[0];
-  console.log("result ", positionList);
+  const positionData = listOrder.list[0];
+
+  console.log("result ", positionData);
 
   const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
 
-  const entryPrice = positionList.entryPrice;
+  const entryPrice = positionData.entryPrice;
   let takeProfit = 0;
   let stopLoss = 0;
 
-  if (positionList.side === "Buy") {
+  if (positionData.side === "Buy") {
     stopLoss = entryPrice * 0.97;
     takeProfit = entryPrice * 1.12;
   } else {
@@ -65,13 +63,13 @@ export const setStopProfit = async (
   }
 
   const data = `{
-    "symbol": "${positionList.symbol}",
-    "parentOrderId": "${openOrderResult.orderId}",
+    "symbol": "${positionData.symbol}",
+    "parentOrderId": "${createOrder.orderId}",
     "takeProfit": "${takeProfit.toFixed(1)}",
     "stopLoss": "${stopLoss.toFixed(1)}"
     "tpTriggerBy":"LastPrice",  
     "slTriggerBy":"LastPrice",
-    "parentOrderLinkId": "${openOrderResult.orderLinkId}"
+    "parentOrderLinkId": "${createOrder.orderLinkId}"
   }`;
 
   console.log("data ", data);
