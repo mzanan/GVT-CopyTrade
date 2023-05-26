@@ -1,14 +1,21 @@
 import React from "react";
-import { openOrder, getOrder } from "../modules/api";
+
+import { executeOrder } from "../modules/Orders/executeOrder";
+import { cancelOrder } from "../modules/Orders/cancelOrder";
+
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const TradeButtons = ({ symbol }) => {
-  const handleOpenOrder = async (type, symbol) => {
+  const handleOpenOrder = async (side, symbol) => {
     try {
-      const [openOrderResponse, info] = await openOrder(type, symbol);
-      toast(info);
-      toast(openOrderResponse.retMsg);
+      const response = await executeOrder(side, symbol);
+
+      console.log("front response data ", response);
+
+      response.forEach((message) => {
+        toast(`${message.description}: ${message.status}`);
+      });
     } catch (error) {
       toast(error.message);
     }
@@ -34,19 +41,12 @@ const TradeButtons = ({ symbol }) => {
 
       <button
         className="app-button app-button-cancel"
-        onClick={() => getOrder()}
+        onClick={() => cancelOrder(symbol)}
       >
         Cancel
       </button>
 
-      <ToastContainer
-        position="bottom-right"
-        autoClose={3000}
-        closeOnClick={false}
-        pauseOnFocusLoss
-        draggable
-        pauseOnHover
-      />
+      <ToastContainer position="bottom-right" autoClose={3000} />
     </div>
   );
 };

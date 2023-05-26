@@ -9,19 +9,19 @@ import {
   TIMESTAMP,
 } from "../constants/index";
 
-function getSignature(parameters) {
+const getSignature = (parameters) => {
   return crypto
     .createHmac("sha256", API_SECRET)
     .update(TIMESTAMP + API_KEY + RECVWINDOW + parameters)
     .digest("hex");
-}
+};
 
-function buildUrl(endpoint, method, data) {
+const buildUrl = (endpoint, method, data) => {
   const query = method === "POST" ? "" : `?${data}`;
   return `${BASE_URL}${endpoint}${query}`;
-}
+};
 
-async function http_request(endpoint, method, data, info) {
+const http_request = async (endpoint, method, data, info) => {
   const sign = getSignature(data);
   const url = buildUrl(endpoint, method, data);
 
@@ -43,11 +43,14 @@ async function http_request(endpoint, method, data, info) {
 
   try {
     const response = await axios(config);
-    return response.data;
+    return {
+      data: response.data,
+      description: info,
+    };
   } catch (error) {
     console.log(error);
   }
-}
+};
 
 module.exports = {
   http_request,

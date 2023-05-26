@@ -1,6 +1,7 @@
 import React from "react";
 import "./App.css";
 import TradeButtons from "./Components/TradeButtons";
+import { getBalance } from "./modules/balance";
 
 const App = () => {
   return (
@@ -15,10 +16,11 @@ const App = () => {
         <TradeButtons symbol="ATOMUSDT" />
         <TradeButtons symbol="DOGEUSDT" />
       </div>
+      <button className="app-button" onClick={() => getBalance()}>
+        getBalance
+      </button>
     </div>
   );
 };
 
 export default App;
-
-// {"side":"Sell","symbol":"BTCUSDT","orderType":"Limit","qty":"0.001","price":"20000","takeProfit":"0","stopLoss":"0","tpTriggerBy":"LastPrice","slTriggerBy":"LastPrice"}'
