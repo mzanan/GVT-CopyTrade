@@ -1,24 +1,23 @@
 import React from "react";
 import "./App.css";
-import TradeButtons from "./Components/TradeButtons";
+
+import Button from "./Components/Button/Button";
+import TradeCards from "./Components/TradeCards";
+
 import { getBalance } from "./modules/balance";
 
 const App = () => {
   return (
     <div className="app-container">
       <h2 className="app-title">GVT CopyTrading</h2>
+      <Button
+        className="app-button"
+        onClick={() => getBalance()}
+        label="getBalance"
+      />
       <div className="app-content">
-        <TradeButtons symbol="BTCUSDT" />
-        <TradeButtons symbol="SOLUSDT" />
-        <TradeButtons symbol="ADAUSDT" />
-        <TradeButtons symbol="NEARUSDT" />
-        <TradeButtons symbol="ETHUSDT" />
-        <TradeButtons symbol="ATOMUSDT" />
-        <TradeButtons symbol="DOGEUSDT" />
+        <TradeCards />
       </div>
-      <button className="app-button" onClick={() => getBalance()}>
-        getBalance
-      </button>
     </div>
   );
 };

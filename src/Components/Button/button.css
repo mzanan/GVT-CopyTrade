@@ -1,0 +1,40 @@
+
+.app-button {
+  border-radius: 10px;
+  border: none;
+  width: 100px;
+  height: 25px;
+}
+
+.app-button:hover {
+  background-color: lightblue;
+}
+
+.app-button:active {
+  background-color: gray;
+  transform: translateY(4px);
+}
+
+.app-button-long:hover {
+  background-color: #12c912;
+}
+
+.app-button-long {
+  background-color: green;
+  margin-bottom: 10px;
+  height: 40px;
+}
+
+.app-button-short {
+  background-color: #b30000;
+  margin-bottom: 10px;
+  height: 40px;
+}
+
+.app-button-short:hover {
+  background-color: #ff0404;
+}
+
+.app-button-cancel {
+  height: 25px;
+}
