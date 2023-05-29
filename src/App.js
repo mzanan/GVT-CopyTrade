@@ -12,9 +12,10 @@ const App = () => {
       <h2 className="app-title">GVT CopyTrading</h2>
       <Button
         className="app-button"
-        onClick={() => getBalance()}
+        action={() => getBalance()}
         label="getBalance"
       />
+
       <div className="app-content">
         <TradeCards />
       </div>
