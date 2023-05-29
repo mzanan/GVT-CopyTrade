@@ -1,17 +1,16 @@
 const { http_request } = require("../../Api/config");
 
 export const setStopProfit = async (createOrder, listOrder) => {
+  const positionData = listOrder.data.list[0];
+  if (!positionData) {
+    return {
+      description: "Setting SL & TP",
+      status: "No open order received.",
+    };
+  }
+
   const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
 
-  const {
-    data: { result: createOrderResult },
-  } = createOrder;
-
-  const {
-    data: { result: listOrderResult },
-  } = listOrder;
-
-  const positionData = listOrderResult.list[0];
   const entryPrice = positionData.entryPrice;
 
   let takeProfit = 0;
@@ -27,12 +26,12 @@ export const setStopProfit = async (createOrder, listOrder) => {
 
   const data = `{
     "symbol": "${positionData.symbol}",
-    "parentOrderId": "${createOrderResult.orderId}",
+    "parentOrderId": "${createOrder.orderId}",
     "takeProfit": "${takeProfit.toFixed(2)}",
     "stopLoss": "${stopLoss.toFixed(2)}",
     "tpTriggerBy":"LastPrice",  
     "slTriggerBy":"LastPrice",
-    "parentOrderLinkId": "${createOrderResult.orderLinkId}"
+    "parentOrderLinkId": "${createOrder.orderLinkId}"
   }`;
 
   const response = await http_request(

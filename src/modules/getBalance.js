@@ -10,7 +10,9 @@ export const getBalance = async () => {
     "Getting Balance..."
   );
 
-  const balance = Number(response.result.availableBalance);
+  console.log(response);
+
+  const balance = Number(response.data.availableBalance);
   const tenPercent = Number((balance * 0.1).toFixed(2));
 
   console.log(balance, tenPercent);

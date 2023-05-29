@@ -4,7 +4,7 @@ import "./App.css";
 import Button from "./Components/Button/Button";
 import TradeCards from "./Components/TradeCards";
 
-import { getBalance } from "./modules/balance";
+import { getBalance } from "./modules/getBalance";
 
 const App = () => {
   return (

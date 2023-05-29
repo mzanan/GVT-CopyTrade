@@ -7,7 +7,7 @@ import {
   API_SECRET,
   RECVWINDOW,
   TIMESTAMP,
-} from "../constants/index";
+} from "./constants/index";
 
 const getSignature = (parameters) => {
   return crypto
@@ -44,8 +44,9 @@ const http_request = async (endpoint, method, data, info) => {
   try {
     const response = await axios(config);
     return {
-      data: response.data,
+      data: response.data.result,
       description: info,
+      status: response.data.retMsg,
     };
   } catch (error) {
     console.log(error);

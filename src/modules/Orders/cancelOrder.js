@@ -1,10 +1,19 @@
 const { http_request } = require("../../Api/config");
 
-export const cancelOrder = async (symbol, orderLinkId) => {
-  const endpoint = "/contract/v3/private/copytrading/order/trading-stop";
+export const cancelOrder = async (symbol, createOrder) => {
+  if (!createOrder) {
+    return {
+      slTpResponse: {
+        description: "Canceling order",
+        status: "No open order received.",
+      },
+    };
+  }
 
-  const data = `{
-    "symbol": "${symbol}"
+  const endpoint = "/contract/v3/private/copytrading/order/cancel";
+
+  const data = `{ 
+    "symbol": "${symbol}",
   }`;
 
   console.log(data);

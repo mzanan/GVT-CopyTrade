@@ -1,29 +1,13 @@
 import React from "react";
-
-import Button from "../Button/Button";
 import "./symbolButtons.css";
-
-import { executeOrder } from "../../modules/Orders/executeOrder";
-import { cancelOrder } from "../../modules/Orders/cancelOrder";
-
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+import {
+  Button,
+  ToastContainer,
+  handleOpenOrder,
+  handleCanelOrder,
+} from "./index";
 
 const SymbolButtons = ({ symbol }) => {
-  const handleOpenOrder = async (side, symbol) => {
-    try {
-      const response = await executeOrder(side, symbol);
-
-      console.log("executeOrder response ", response);
-
-      response.forEach((message) => {
-        toast(`${message.description}: ${message.status}`);
-      });
-    } catch (error) {
-      toast(error.message);
-    }
-  };
-
   return (
     <div className="app-button-container">
       <p className="app-button-title"> {symbol} </p>
@@ -31,7 +15,7 @@ const SymbolButtons = ({ symbol }) => {
       <Button
         className="app-button-long"
         label="Long"
-        action={() => handleOpenOrder("Buy")}
+        action={() => handleOpenOrder("Buy", symbol)}
       />
 
       <Button
@@ -42,7 +26,7 @@ const SymbolButtons = ({ symbol }) => {
 
       <Button
         className="app-button-cancel"
-        action={() => cancelOrder(symbol)}
+        action={() => handleCanelOrder(symbol)}
         label="Cancel"
       />
 

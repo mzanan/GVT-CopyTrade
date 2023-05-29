@@ -12,9 +12,18 @@ export const executeOrder = async (side, symbol) => {
   const slTpResponse = await setStopProfit(createOrder, listOrder);
   console.log(slTpResponse);
 
-  return [
-    { description: createOrder.description, status: createOrder.data.retMsg },
-    { description: listOrder.description, status: listOrder.data.retMsg },
-    { description: slTpResponse.description, status: slTpResponse.data.retMsg },
-  ];
+  return {
+    createOrder: {
+      description: createOrder.description,
+      status: createOrder.status,
+    },
+    listOrder: {
+      description: listOrder.description,
+      status: listOrder.status,
+    },
+    slTpResponse: {
+      description: slTpResponse.description,
+      status: slTpResponse.status,
+    },
+  };
 };

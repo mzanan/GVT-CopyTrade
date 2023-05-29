@@ -15,7 +15,7 @@ export const openOrder = async (side, symbol) => {
   }`;
 
   const orderSide = side === "Buy" ? "LONG" : "SHORT";
-  const info = `Opening ${orderSide} BTCUSDT`;
+  const info = `Opening ${orderSide} ${symbol}`;
 
   const response = await http_request(endpoint, "POST", data, info);
 
