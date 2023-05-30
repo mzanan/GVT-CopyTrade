@@ -12,9 +12,7 @@ export const cancelOrder = async (symbol, createOrder) => {
 
   const endpoint = "/contract/v3/private/copytrading/order/cancel";
 
-  const data = `{ 
-    "symbol": "${symbol}",
-  }`;
+  const data = `symbol=${symbol}`;
 
   console.log(data);
 

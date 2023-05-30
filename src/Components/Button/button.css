@@ -6,6 +6,11 @@
   height: 25px;
 }
 
+.app-button-free-width {
+  width: initial;
+}
+
+
 .app-button:hover {
   background-color: lightblue;
 }

@@ -1,7 +1,7 @@
 const crypto = require("crypto");
 const { http_request } = require("../../Api/config");
 
-export const openOrder = async (side, symbol) => {
+export const openOrder = async (side, symbol, qty) => {
   const orderLinkId = crypto.randomBytes(16).toString("hex");
 
   const endpoint = "/contract/v3/private/copytrading/order/create";
