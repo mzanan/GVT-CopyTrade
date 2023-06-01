@@ -2,6 +2,7 @@ const { http_request } = require("../../Api/config");
 
 export const setStopProfit = async (createOrder, listOrder) => {
   const positionData = listOrder.data.list[0];
+
   if (!positionData) {
     return {
       description: "Setting SL & TP",
@@ -26,12 +27,12 @@ export const setStopProfit = async (createOrder, listOrder) => {
 
   const data = `{
     "symbol": "${positionData.symbol}",
-    "parentOrderId": "${createOrder.orderId}",
+    "parentOrderId": "${createOrder.data.orderId}",
     "takeProfit": "${takeProfit.toFixed(2)}",
     "stopLoss": "${stopLoss.toFixed(2)}",
     "tpTriggerBy":"LastPrice",  
     "slTriggerBy":"LastPrice",
-    "parentOrderLinkId": "${createOrder.orderLinkId}"
+    "parentOrderLinkId": "${createOrder.data.orderLinkId}"
   }`;
 
   const response = await http_request(

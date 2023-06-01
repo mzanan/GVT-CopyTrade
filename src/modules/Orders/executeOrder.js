@@ -1,5 +1,5 @@
 import { openOrder } from "./openOrder";
-import { getOrder } from "./getOrder";
+import { getOrders } from "./getOrders";
 import { setStopProfit } from "./setStopProfit";
 
 export const executeOrder = async (side, symbol) => {
@@ -12,36 +12,26 @@ export const executeOrder = async (side, symbol) => {
         status: createOrder.status,
       },
     };
-  } else if (createOrder.data) {
-    return {
-      createOrder: {
-        description: createOrder.description,
-        status: createOrder.status,
-      },
-    };
   }
 
-  const listOrder = await getOrder(symbol);
+  const listOrder = await getOrders(symbol);
   console.log(listOrder);
-
-  if (listOrder) {
-    return {
-      listOrder: {
-        description: listOrder.description,
-        status: listOrder.status,
-      },
-    };
-  }
 
   const slTpResponse = await setStopProfit(createOrder, listOrder);
   console.log(slTpResponse);
 
-  if (slTpResponse) {
-    return {
-      slTpResponse: {
-        description: slTpResponse.description,
-        status: slTpResponse.status,
-      },
-    };
-  }
+  return {
+    createOrder: {
+      description: createOrder.description,
+      status: createOrder.status,
+    },
+    listOrder: {
+      description: listOrder.description,
+      status: listOrder.status,
+    },
+    slTpResponse: {
+      description: slTpResponse.description,
+      status: slTpResponse.status,
+    },
+  };
 };

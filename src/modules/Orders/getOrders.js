@@ -1,6 +1,6 @@
 const { http_request } = require("../../Api/config");
 
-export const getOrder = async (symbol) => {
+export const getOrders = async (symbol) => {
   const endpoint = "/contract/v3/private/copytrading/position/list";
 
   const data = `symbol=${symbol}`;
