@@ -13,6 +13,5 @@ export const getSymbolPrice = async (symbol) => {
   );
 
   const price = response.data.list[0].lastPrice;
-
   return price;
 };

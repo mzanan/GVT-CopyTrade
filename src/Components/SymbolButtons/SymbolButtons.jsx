@@ -7,7 +7,11 @@ import {
   handleCanelOrder,
 } from "./index";
 
-const SymbolButtons = ({ symbol }) => {
+const SymbolButtons = ({ symbol, tenPercent }) => {
+  const openTrade = (side) => {
+    handleOpenOrder(side, symbol, tenPercent);
+  };
+
   return (
     <div className="app-button-container">
       <p className="app-button-title"> {symbol} </p>
@@ -15,12 +19,12 @@ const SymbolButtons = ({ symbol }) => {
       <Button
         className="app-button-long"
         label="Long"
-        action={() => handleOpenOrder("Buy", symbol)}
+        action={() => openTrade("Buy")}
       />
 
       <Button
         className="app-button-short"
-        action={() => handleOpenOrder("Sell", symbol)}
+        action={() => openTrade("Sell")}
         label="SHORT"
       />
 

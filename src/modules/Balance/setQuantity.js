@@ -2,14 +2,18 @@ import { getBalance } from "./getBalance";
 import { setTenPercent } from "./setTenPercent";
 import { getSymbolPrice } from "../Public/getSymbolPrice";
 
-export const setQuantity = async (symbol) => {
+export const tenPercentBalance = async () => {
   const balance = await getBalance();
-  const amount = await setTenPercent(balance);
+  const tenPercent = await setTenPercent(balance);
+
+  return tenPercent;
+};
+
+export const setQuantity = async (tenPercent, symbol) => {
   const price = await getSymbolPrice(symbol);
 
-  const qty = amount / price;
+  const qty = (tenPercent / price).toFixed(8); // eight decimals
+  console.log({ tenPercent, symbol, price, qty });
 
-  const roundedQty = qty.toFixed(8); // eight decimals
-
-  return roundedQty;
+  return qty;
 };

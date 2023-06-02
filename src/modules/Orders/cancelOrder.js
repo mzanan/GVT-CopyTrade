@@ -1,7 +1,8 @@
 const { http_request } = require("../../Api/config");
+/* import { orderLinkId } from "./openOrder"; */
 
-export const cancelOrder = async (symbol, createOrder) => {
-  if (!createOrder) {
+export const cancelOrder = async (symbol) => {
+  /* if (!createOrder) {
     return {
       slTpResponse: {
         description: "Canceling order",
@@ -9,10 +10,16 @@ export const cancelOrder = async (symbol, createOrder) => {
       },
     };
   }
+ */
+
+  /* console.log("orderLinkId ", orderLinkId); */
 
   const endpoint = "/contract/v3/private/copytrading/order/cancel";
 
-  const data = `symbol=${symbol}`;
+  const data = `{
+    "symbol": "${symbol}",
+  }`;
+  /* "orderLinkId": "${orderLinkId}", */
 
   console.log(data);
 

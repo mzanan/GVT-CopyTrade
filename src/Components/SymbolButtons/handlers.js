@@ -9,9 +9,9 @@ const handleToast = (response) => {
   }
 };
 
-const handleOpenOrder = async (side, symbol) => {
+const handleOpenOrder = async (side, symbol, tenPercent) => {
   try {
-    const response = await executeOrder(side, symbol);
+    const response = await executeOrder(side, symbol, tenPercent);
 
     handleToast(response);
   } catch (error) {
@@ -21,9 +21,10 @@ const handleOpenOrder = async (side, symbol) => {
 
 const handleCanelOrder = async (symbol) => {
   try {
-    const response = await cancelOrder(symbol);
+    /* const response =  */
+    await cancelOrder(symbol);
 
-    handleToast(response);
+    /* handleToast(response); */
   } catch (error) {
     toast(error);
   }

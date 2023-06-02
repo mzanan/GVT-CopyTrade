@@ -11,13 +11,15 @@ export const openOrder = async (side, symbol, qty) => {
     "symbol": "${symbol}",
     "orderType":"Market",
     "orderLinkId": "${orderLinkId}",
-    "qty":"0.001"
+    "qty": "${qty}"
   }`;
+
+  console.log(data);
 
   const orderSide = side === "Buy" ? "LONG" : "SHORT";
   const info = `Opening ${orderSide} ${symbol}`;
 
   const response = await http_request(endpoint, "POST", data, info);
 
-  return response;
+  return { response, orderLinkId };
 };

@@ -1,16 +1,22 @@
 import React, { Fragment } from "react";
 import SymbolButtons from "./SymbolButtons/SymbolButtons";
 
-const TradeCards = () => {
+const TradeCards = ({ tenPercent }) => {
+  const symbols = [
+    "BTCUSDT",
+    "SOLUSDT",
+    "ADAUSDT",
+    "NEARUSDT",
+    "ETHUSDT",
+    "ATOMUSDT",
+    "DOGEUSDT",
+  ];
+
   return (
     <Fragment>
-      <SymbolButtons symbol="BTCUSDT" />
-      <SymbolButtons symbol="SOLUSDT" />
-      <SymbolButtons symbol="ADAUSDT" />
-      <SymbolButtons symbol="NEARUSDT" />
-      <SymbolButtons symbol="ETHUSDT" />
-      <SymbolButtons symbol="ATOMUSDT" />
-      <SymbolButtons symbol="DOGEUSDT" />
+      {symbols.map((symbol) => (
+        <SymbolButtons key={symbol} symbol={symbol} tenPercent={tenPercent} />
+      ))}
     </Fragment>
   );
 };

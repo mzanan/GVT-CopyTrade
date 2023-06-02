@@ -1,9 +1,12 @@
 import { openOrder } from "./openOrder";
 import { getOrders } from "./getOrders";
 import { setStopProfit } from "./setStopProfit";
+import { setQuantity } from "../Balance/setQuantity";
 
-export const executeOrder = async (side, symbol) => {
-  const createOrder = await openOrder(side, symbol);
+export const executeOrder = async (side, symbol, tenPercent) => {
+  const qty = await setQuantity(tenPercent, symbol);
+
+  const { response: createOrder } = await openOrder(side, symbol, qty);
   console.log(createOrder);
 
   if (Object.keys(createOrder.data).length === 0) {
@@ -25,13 +28,6 @@ export const executeOrder = async (side, symbol) => {
       description: createOrder.description,
       status: createOrder.status,
     },
-    listOrder: {
-      description: listOrder.description,
-      status: listOrder.status,
-    },
-    slTpResponse: {
-      description: slTpResponse.description,
-      status: slTpResponse.status,
-    },
+    orderId: createOrder.data.orderId,
   };
 };
