@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
 
 import { executeOrder } from "../../modules/Orders/executeOrder";
-import { cancelOrder } from "../../modules/Orders/cancelOrder";
+import { cancelPosition } from "../../modules/Orders/cancelPosition";
 
-const handleToast = (response) => {
+export const handleToast = (response) => {
   for (const message of Object.values(response)) {
     toast(`${message.description}: ${message.status}`);
   }
 };
 
-const handleOpenOrder = async (side, symbol, tenPercent) => {
+export const handleOpenOrder = async (side, symbol, tenPercent) => {
   try {
     const response = await executeOrder(side, symbol, tenPercent);
 
@@ -19,19 +19,13 @@ const handleOpenOrder = async (side, symbol, tenPercent) => {
   }
 };
 
-const handleCanelOrder = async (symbol) => {
+export const handleCanelOrder = async (side, symbol) => {
   try {
     /* const response =  */
-    await cancelOrder(symbol);
+    await cancelPosition(side, symbol);
 
     /* handleToast(response); */
   } catch (error) {
     toast(error);
   }
-};
-
-module.exports = {
-  handleToast,
-  handleOpenOrder,
-  handleCanelOrder,
 };

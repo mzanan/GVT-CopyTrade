@@ -8,8 +8,15 @@ import {
 } from "./index";
 
 const SymbolButtons = ({ symbol, tenPercent }) => {
+  let sidePosition = "";
+
   const openTrade = (side) => {
     handleOpenOrder(side, symbol, tenPercent);
+    sidePosition = side;
+  };
+
+  const closeTrade = (symbol) => {
+    handleCanelOrder(sidePosition, symbol);
   };
 
   return (
@@ -30,7 +37,7 @@ const SymbolButtons = ({ symbol, tenPercent }) => {
 
       <Button
         className="app-button-cancel"
-        action={() => handleCanelOrder(symbol)}
+        action={() => closeTrade(symbol)}
         label="Cancel"
       />
 

@@ -21,5 +21,5 @@ export const openOrder = async (side, symbol, qty) => {
 
   const response = await http_request(endpoint, "POST", data, info);
 
-  return { response, orderLinkId };
+  return response;
 };
