@@ -1,4 +1,4 @@
-const { http_request } = require("../../Api/config");
+import { http_request } from "../../config";
 
 export const getBalance = async () => {
   const endpoint = "/contract/v3/private/copytrading/wallet/balance";

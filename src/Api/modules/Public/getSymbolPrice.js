@@ -1,4 +1,4 @@
-const { http_request } = require("../../Api/config");
+import { http_request } from "../../config";
 
 export const getSymbolPrice = async (symbol) => {
   const endpoint = "/derivatives/v3/public/tickers";

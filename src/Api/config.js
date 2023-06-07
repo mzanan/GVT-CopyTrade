@@ -1,19 +1,14 @@
-const crypto = require("crypto");
-const axios = require("axios");
+import axios from "axios";
+import cryptoJS from "crypto-js";
 
-import {
-  BASE_URL,
-  API_KEY,
-  API_SECRET,
-  RECVWINDOW,
-  TIMESTAMP,
-} from "./constants/index";
+import { BASE_URL, API_KEY, API_SECRET, RECVWINDOW, TIMESTAMP } from ".";
 
 const getSignature = (parameters) => {
-  return crypto
-    .createHmac("sha256", API_SECRET)
-    .update(TIMESTAMP + API_KEY + RECVWINDOW + parameters)
-    .digest("hex");
+  const hmac = cryptoJS.HmacSHA256(
+    TIMESTAMP + API_KEY + RECVWINDOW + parameters,
+    API_SECRET
+  );
+  return hmac.toString(cryptoJS.enc.Hex);
 };
 
 const buildUrl = (endpoint, method, data) => {
@@ -53,6 +48,4 @@ const http_request = async (endpoint, method, data, info) => {
   }
 };
 
-module.exports = {
-  http_request,
-};
+export { http_request };

@@ -1,6 +1,6 @@
-import { getBalance } from "./getBalance";
+import { getBalance } from "../Api/modules/Balance/getBalance";
 import { setTenPercent } from "./setTenPercent";
-import { getSymbolPrice } from "../Public/getSymbolPrice";
+import { getSymbolPrice } from "../Api/modules/Public/getSymbolPrice";
 
 export const tenPercentBalance = async () => {
   const balance = await getBalance();

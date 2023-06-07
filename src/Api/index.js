@@ -4,10 +4,4 @@ const API_SECRET = process.env.REACT_APP_PRIVATE_KEY;
 const RECVWINDOW = 100000;
 const TIMESTAMP = Date.now().toString();
 
-module.exports = {
-  BASE_URL,
-  API_KEY,
-  API_SECRET,
-  RECVWINDOW,
-  TIMESTAMP,
-};
+export { BASE_URL, API_KEY, API_SECRET, RECVWINDOW, TIMESTAMP };

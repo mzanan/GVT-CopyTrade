@@ -1,7 +1,7 @@
 import { toast } from "react-toastify";
 
-import { executeOrder } from "../../modules/Orders/executeOrder";
-import { cancelPosition } from "../../modules/Orders/cancelPosition";
+import { executeOrder } from "../../Api/modules/Orders/executeOrder";
+import { cancelPosition } from "../../Api/modules/Orders/cancelPosition";
 
 export const handleToast = (response) => {
   for (const message of Object.values(response)) {

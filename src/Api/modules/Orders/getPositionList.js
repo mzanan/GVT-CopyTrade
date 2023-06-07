@@ -1,4 +1,4 @@
-const { http_request } = require("../../Api/config");
+import { http_request } from "../../config";
 
 export const getPositionList = async (symbol) => {
   const endpoint = "/contract/v3/private/copytrading/position/list";

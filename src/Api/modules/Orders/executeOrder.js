@@ -1,7 +1,7 @@
 import { openOrder } from "./openOrder";
 import { getPositionList } from "./getPositionList";
 import { setStopProfit } from "./setStopProfit";
-import { setQuantity } from "../Balance/setQuantity";
+import { setQuantity } from "../../../utils/setQuantity";
 
 export const executeOrder = async (side, symbol, tenPercent) => {
   const qty = await setQuantity(tenPercent, symbol);

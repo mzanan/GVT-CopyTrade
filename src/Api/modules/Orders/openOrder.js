@@ -1,18 +1,18 @@
-const crypto = require("crypto");
-const { http_request } = require("../../Api/config");
+import cryptoJS from "crypto-js";
+import { http_request } from "../../config";
 
 export const openOrder = async (side, symbol, qty) => {
-  const orderLinkId = crypto.randomBytes(16).toString("hex");
+  const orderLinkId = cryptoJS.lib.WordArray.random(16).toString();
 
   const endpoint = "/contract/v3/private/copytrading/order/create";
 
-  const data = `{
-    "side": "${side}",
-    "symbol": "${symbol}",
-    "orderType":"Market",
-    "orderLinkId": "${orderLinkId}",
-    "qty": "${qty}"
-  }`;
+  const data = JSON.stringify({
+    side: side,
+    symbol: symbol,
+    orderType: "Market",
+    orderLinkId: orderLinkId,
+    qty: qty,
+  });
 
   console.log(data);
 

@@ -1,4 +1,4 @@
-const { http_request } = require("../../Api/config");
+import { http_request } from "../../config";
 
 export const setStopProfit = async (createOrder, listOrder) => {
   const positionData = listOrder.data.list[0];
@@ -25,15 +25,15 @@ export const setStopProfit = async (createOrder, listOrder) => {
     takeProfit = entryPrice * 0.88;
   }
 
-  const data = `{
-    "symbol": "${positionData.symbol}",
-    "parentOrderId": "${createOrder.data.orderId}",
-    "takeProfit": "${takeProfit.toFixed(2)}",
-    "stopLoss": "${stopLoss.toFixed(2)}",
-    "tpTriggerBy":"LastPrice",  
-    "slTriggerBy":"LastPrice",
-    "parentOrderLinkId": "${createOrder.data.orderLinkId}"
-  }`;
+  const data = JSON.stringify({
+    symbol: positionData.symbol,
+    parentOrderId: createOrder.data.orderId,
+    takeProfit: takeProfit.toFixed(2),
+    stopLoss: stopLoss.toFixed(2),
+    tpTriggerBy: "LastPrice",
+    slTriggerBy: "LastPrice",
+    parentOrderLinkId: createOrder.data.orderLinkId,
+  });
 
   const response = await http_request(
     endpoint,

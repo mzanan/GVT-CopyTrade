@@ -1,11 +1,6 @@
 import React from "react";
 import "./symbolButtons.css";
-import {
-  Button,
-  ToastContainer,
-  handleOpenOrder,
-  handleCanelOrder,
-} from "./index";
+import { Button, ToastContainer, handleOpenOrder, handleCanelOrder } from ".";
 
 const SymbolButtons = ({ symbol, tenPercent }) => {
   let sidePosition = "";
@@ -26,18 +21,18 @@ const SymbolButtons = ({ symbol, tenPercent }) => {
       <Button
         className="app-button-long"
         label="Long"
-        action={() => openTrade("Buy")}
+        onClick={() => openTrade("Buy")}
       />
 
       <Button
         className="app-button-short"
-        action={() => openTrade("Sell")}
+        onClick={() => openTrade("Sell")}
         label="SHORT"
       />
 
       <Button
         className="app-button-cancel"
-        action={() => closeTrade(symbol)}
+        onClick={() => closeTrade(symbol)}
         label="Cancel"
       />
 

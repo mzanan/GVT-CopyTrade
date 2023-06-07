@@ -1,4 +1,4 @@
-const { http_request } = require("../../Api/config");
+import { http_request } from "../../config";
 
 export const cancelPosition = async (side, symbol) => {
   /* if (!createOrder) {
@@ -22,10 +22,10 @@ export const cancelPosition = async (side, symbol) => {
 
   console.log({ side, positionIdx });
 
-  const data = `{
-    "symbol": "${symbol}",
-    "positionIdx": "${positionIdx}"
-  }`;
+  const data = JSON.stringify({
+    symbol: symbol,
+    positionIdx: positionIdx,
+  });
 
   console.log(data);
 

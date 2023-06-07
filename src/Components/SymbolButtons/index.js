@@ -5,9 +5,4 @@ import "react-toastify/dist/ReactToastify.css";
 
 import { handleOpenOrder, handleCanelOrder } from "./handlers";
 
-module.exports = {
-  Button,
-  ToastContainer,
-  handleOpenOrder,
-  handleCanelOrder,
-};
+export { Button, ToastContainer, handleOpenOrder, handleCanelOrder };

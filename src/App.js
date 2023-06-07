@@ -3,15 +3,15 @@ import "./App.css";
 
 import TradeCards from "./Components/TradeCards";
 import Button from "./Components/Button/Button";
-import { tenPercentBalance } from "./modules/Balance/setQuantity";
+import { tenPercentBalance } from "./utils/setQuantity";
 
 const App = () => {
   const [tenPercent, setTenPercent] = useState(null);
 
   const handleBalance = async () => {
-    const tenPercent = await tenPercentBalance();
-    console.log({ tenPercent });
-    setTenPercent(tenPercent);
+    const tenPercentValue = await tenPercentBalance();
+    console.log({ tenPercentValue });
+    setTenPercent(tenPercentValue);
   };
 
   return (
@@ -22,9 +22,7 @@ const App = () => {
         <Button
           label="Get Wallet Balance"
           className="free-width"
-          action={() => {
-            handleBalance();
-          }}
+          onClick={handleBalance}
         />
       </div>
 
