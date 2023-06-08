@@ -1,11 +1,13 @@
 import axios from "axios";
 import cryptoJS from "crypto-js";
 
-import { BASE_URL, API_KEY, API_SECRET, RECVWINDOW, TIMESTAMP } from ".";
+import { BASE_URL, API_KEY, API_SECRET } from "../config";
 
-const getSignature = (parameters) => {
+const RECVWINDOW = 5000;
+
+const getSignature = ({ data, timestamp }) => {
   const hmac = cryptoJS.HmacSHA256(
-    TIMESTAMP + API_KEY + RECVWINDOW + parameters,
+    timestamp + API_KEY + RECVWINDOW + data,
     API_SECRET
   );
   return hmac.toString(cryptoJS.enc.Hex);
@@ -17,7 +19,9 @@ const buildUrl = (endpoint, method, data) => {
 };
 
 const http_request = async (endpoint, method, data, info) => {
-  const sign = getSignature(data);
+  const timestamp = Date.now().toString();
+
+  const sign = getSignature({data, timestamp});
   const url = buildUrl(endpoint, method, data);
 
   const config = {
@@ -27,7 +31,7 @@ const http_request = async (endpoint, method, data, info) => {
       "X-BAPI-SIGN-TYPE": "2",
       "X-BAPI-SIGN": sign,
       "X-BAPI-API-KEY": API_KEY,
-      "X-BAPI-TIMESTAMP": TIMESTAMP,
+      "X-BAPI-TIMESTAMP": timestamp,
       "X-BAPI-RECV-WINDOW": RECVWINDOW,
       "Content-Type": "application/json charset=utf-8",
     },

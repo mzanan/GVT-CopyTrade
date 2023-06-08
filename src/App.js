@@ -3,13 +3,21 @@ import "./App.css";
 
 import TradeCards from "./Components/TradeCards";
 import Button from "./Components/Button/Button";
-import { tenPercentBalance } from "./utils/setQuantity";
+import balanceService from "./services/BalanceService";
+import useBybitSocket from "./api/webSocket/useBybitSocket";
+import { API_KEY, API_SECRET } from "./config";
 
 const App = () => {
+  useBybitSocket({
+    apiKey: API_KEY,
+    apiSecret: API_SECRET,
+    onOpen: console.log,
+    onMessage: console.debug,
+  });
   const [tenPercent, setTenPercent] = useState(null);
 
   const handleBalance = async () => {
-    const tenPercentValue = await tenPercentBalance();
+    const tenPercentValue = await balanceService.tenPercentBalance();
     console.log({ tenPercentValue });
     setTenPercent(tenPercentValue);
   };
