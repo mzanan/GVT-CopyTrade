@@ -4,16 +4,18 @@ import "./App.css";
 import TradeCards from "./Components/TradeCards";
 import Button from "./Components/Button/Button";
 import balanceService from "./services/BalanceService";
-import useBybitSocket from "./api/webSocket/useBybitSocket";
+import usePrivateBybitSocket from "./api/webSocket/usePrivateBybitSocket";
 import { API_KEY, API_SECRET } from "./config";
 
 const App = () => {
-  useBybitSocket({
+  usePrivateBybitSocket({
     apiKey: API_KEY,
     apiSecret: API_SECRET,
     onOpen: console.log,
-    onMessage: console.debug,
+    onMessage: console.log,
+    subscriptions: [""],
   });
+
   const [tenPercent, setTenPercent] = useState(null);
 
   const handleBalance = async () => {

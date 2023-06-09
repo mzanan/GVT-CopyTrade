@@ -2,9 +2,10 @@ import { useEffect, useState } from "react";
 
 const cryptoJS = require("crypto-js");
 
-export const BYBIT_SOCKET_URI = "wss://stream-testnet.bybit.com/v5/private";
+export const BYBIT_SOCKET_URI =
+  "wss://stream-testnet.bybit.com/realtime_private";
 
-const useBybitSocket = ({
+const usePrivateBybitSocket = ({
   apiKey,
   apiSecret,
   subscriptions,
@@ -22,7 +23,7 @@ const useBybitSocket = ({
 
     const handleOpen = (event) => {
       console.log("open event!");
-      console.log("WebSocket Client Connected");
+      console.log("WebSocket Private Client Connected");
 
       const expires = new Date().getTime() + 10000;
 
@@ -72,4 +73,4 @@ const useBybitSocket = ({
   return clientInstance;
 };
 
-export default useBybitSocket;
+export default usePrivateBybitSocket;

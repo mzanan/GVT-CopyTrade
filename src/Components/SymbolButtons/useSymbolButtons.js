@@ -15,6 +15,7 @@ const useSymbolButtons = ({ symbol, tenPercent }) => {
 
       toast(`Long open: ${symbol} ${tenPercent}`);
     },
+
     onShort: async () => {
       await orderService.executeOrder(
         Constants.ORDER_SHORT,
@@ -26,6 +27,7 @@ const useSymbolButtons = ({ symbol, tenPercent }) => {
 
       toast(`Short open: ${symbol} ${tenPercent}`);
     },
+
     onCancel: () => orderService.cancelOrder(sidePosition, symbol),
   };
 };
